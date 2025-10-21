@@ -19,14 +19,15 @@ let py = 0;
 let colors = [];
 let selectedColor;
 let Yvalue = 0
+let selectedBrush = 1
 
 
 function drawInteraction(faces, hands) {
   colors = [
-    color(255, 18, 18), // red 
-    color(38, 18, 255), // blue 
-    color(42, 255, 18), // green
-    color(255, 176, 18), // orange
+    color(199, 18, 69), // red 
+    color(34, 18, 122), // blue 
+    color(40, 110, 19), // green
+    color(207, 156, 19), // orange
 
   ];
 /////
@@ -35,6 +36,7 @@ function drawInteraction(faces, hands) {
   image(borderImage, 0, 0,)
   image(brushImage, 100, 100, 200, 200)
   image(colourImage, 100, 220, 200, 200)
+  strokeWeight(7)
   fill(selectedColor)
   ellipse(260, 340, 50) // shows current colour
 
@@ -51,7 +53,21 @@ function drawInteraction(faces, hands) {
     */
     if (hand.handedness === "Left") {
       Yvalue = hand.index_finger_tip.y; // this will stay as zer untill the program sees a left hand 
+      let whatGesture = detectHandGesture(hand)
+      if(whatGesture == "Open Palm"){
+        selectedBrush = 1
+      }
+      if(whatGesture == "Peace"){
+        selectedBrush = 2
+      }
+      if(whatGesture == "Thumbs Up"){
+        selectedBrush = 3
+      }
+      if(whatGesture == "Fist"){
+        selectedBrush = 4
+      }
     }
+  
 
 
     if (hand.handedness === "Right") { // draw when pinching right hand 
@@ -69,9 +85,34 @@ function drawInteraction(faces, hands) {
       image(brushCursorImage, x - 20, y - 100, 120, 120)
 
       if (d < 50) {
-        painting.stroke(selectedColor);
-        painting.strokeWeight(16);
-        painting.line(px, py, x, y);
+        if (selectedBrush == 1){
+          painting.stroke(selectedColor);
+          painting.strokeWeight(16);
+          painting.line(px, py, x, y);
+        }
+        if (selectedBrush == 2){
+          painting.stroke(0);
+          painting.fill(selectedColor)
+          painting.strokeWeight(7);
+          painting.circle(x, y, 20)
+        }
+        if (selectedBrush == 3){
+          painting.stroke(selectedColor);
+          painting.strokeWeight(30);
+          painting.line(px, py, x, y);
+          painting.stroke(50);
+          painting.strokeWeight(20);
+          painting.line(px, py, x, y);
+          painting.stroke(10);
+          painting.strokeWeight(8);
+          painting.line(px, py, x, y);
+        }
+        if (selectedBrush == 4){
+          painting.fill(selectedColor)
+          painting.stroke(0)
+          painting.strokeWeight(8)
+          painting.square(x, y, 50)
+        }
       }
       px = x;
       py = y;
