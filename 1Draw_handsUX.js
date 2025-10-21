@@ -1,10 +1,15 @@
 // ----=  HANDS  =----
 // USING THE GESTURE DETECTORS (check their values in the debug menu)
 // detectHandGesture(hand) returns "Pinch", "Peace", "Thumbs Up", "Pointing", "Open Palm", or "Fist"
-
+let brushCursorImage;
+let brushImage;
+let colourImage;
 /* load images here */
 function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
+  brushCursorImage = loadImage('/images/Brush_Cursor.PNG')
+  brushImage = loadImage('/images/Brush.PNG')
+  colourImage = loadImage('/images/Colour (1).PNG')
 }
 
 let px = 0;
@@ -25,8 +30,10 @@ function drawInteraction(faces, hands) {
 /////
   selectedColor = colors[int(map(Yvalue, 0, height, 0, colors.length))]
 
+  image(brushImage, 100, 100, 200, 200)
+  image(colourImage, 100, 220, 200, 200)
   fill(selectedColor)
-  ellipse(width / 2, 100, 50) // shows current colour
+  ellipse(260, 340, 50) // shows current colour
 
   // hands part
   // for loop to capture if there is more than one hand on the screen. This applies the same process to all hands.
@@ -56,7 +63,7 @@ function drawInteraction(faces, hands) {
       let d = dist(indexFingerTipX, indexFingerTipY, thumbTipX, thumbTipY);
 
       fill(selectedColor)
-      ellipse(x, y, 50)
+      image(brushCursorImage, x - 20, y - 100, 120, 120)
 
       if (d < 50) {
         painting.stroke(selectedColor);
