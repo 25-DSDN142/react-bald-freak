@@ -1,7 +1,7 @@
 // ----=  HANDS  =----
 // USING THE GESTURE DETECTORS (check their values in the debug menu)
 // detectHandGesture(hand) returns "Pinch", "Peace", "Thumbs Up", "Pointing", "Open Palm", or "Fist"
-let brushCursorImage;
+let brushCursorImage; //variables for images
 let brushImage;
 let colourImage;
 let borderImage;
@@ -14,12 +14,14 @@ function prepareInteraction() {
   borderImage = loadImage('/images/border.PNG')
 }
 
+/////////////////NOTE: TO SWITCH BETWEEN BRUSHES, OPEN PALM FOR BASIC BRUSH, PEACE FOR CIRCLE BRUSH, THUMBS UP FOR TRICOLOR BRUSH, FIST FOR SQUARE BRUSH/////////////
+
 let px = 0;
 let py = 0;
 let colors = [];
 let selectedColor;
 let Yvalue = 0
-let selectedBrush = 1
+let selectedBrush = 1 //variable for determining which brush is active
 
 
 function drawInteraction(faces, hands) {
@@ -33,13 +35,45 @@ function drawInteraction(faces, hands) {
 /////
   selectedColor = colors[int(map(Yvalue, 0, height, 0, colors.length))]
 
-  image(borderImage, 0, 0,)
-  image(brushImage, 100, 100, 200, 200)
-  image(colourImage, 100, 220, 200, 200)
+  image(borderImage, 0, 0,) //the border image
+  image(brushImage, 100, 100, 200, 200) //image to display the current brush in use
+  image(colourImage, 100, 220, 200, 200) // image to show current colour
+  stroke(0)
   strokeWeight(7)
   fill(selectedColor)
   ellipse(260, 340, 50) // shows current colour
-
+  
+  //these show the current brush in use
+  if (selectedBrush == 1){
+    fill(selectedColor)
+    stroke(selectedColor)
+    ellipse(250, 210, 16)
+  }
+  if (selectedBrush == 2){
+    stroke(0);//black
+    fill(selectedColor)
+    strokeWeight(7);
+    circle(250, 210, 20)
+  }
+  if (selectedBrush == 3){
+    strokeWeight(1)
+    stroke(selectedColor)
+    fill(selectedColor);
+    circle(250, 210, 30);
+    stroke(127);//gray
+    fill(127)//gray
+    circle(250, 210, 20);
+    stroke(10);//black
+    fill(10) //black
+    circle(250, 210, 8);
+  }
+  if(selectedBrush == 4){
+    fill(selectedColor)
+    stroke(0)
+    strokeWeight(8)
+    square(230, 180, 50)
+  }
+  
   // hands part
   // for loop to capture if there is more than one hand on the screen. This applies the same process to all hands.
   for (let i = 0; i < hands.length; i++) {
@@ -54,7 +88,7 @@ function drawInteraction(faces, hands) {
     if (hand.handedness === "Left") {
       Yvalue = hand.index_finger_tip.y; // this will stay as zer untill the program sees a left hand 
       let whatGesture = detectHandGesture(hand)
-      if(whatGesture == "Open Palm"){
+      if(whatGesture == "Open Palm"){ //these are the gesture controls to switch between different brushes with the left hand
         selectedBrush = 1
       }
       if(whatGesture == "Peace"){
@@ -82,37 +116,41 @@ function drawInteraction(faces, hands) {
       let d = dist(indexFingerTipX, indexFingerTipY, thumbTipX, thumbTipY);
 
       fill(selectedColor)
-      image(brushCursorImage, x - 20, y - 100, 120, 120)
+      image(brushCursorImage, x - 20, y - 100, 120, 120) //image of a brush to act as a cursor and show where on canvas you are drawing
 
       if (d < 50) {
         if (selectedBrush == 1){
-          painting.stroke(selectedColor);
+          painting.stroke(selectedColor); //this sequence of if statements is what initiates the brush switching on canvas
           painting.strokeWeight(16);
           painting.line(px, py, x, y);
         }
+        //^^^basic brush^^^
         if (selectedBrush == 2){
           painting.stroke(0);
           painting.fill(selectedColor)
           painting.strokeWeight(7);
           painting.circle(x, y, 20)
         }
+        //^^^circle brush^^^
         if (selectedBrush == 3){
           painting.stroke(selectedColor);
           painting.strokeWeight(30);
           painting.line(px, py, x, y);
-          painting.stroke(50);
+          painting.stroke(50);//gray
           painting.strokeWeight(20);
           painting.line(px, py, x, y);
-          painting.stroke(10);
+          painting.stroke(10);//black
           painting.strokeWeight(8);
           painting.line(px, py, x, y);
         }
+        //^^^tricolor brush^^^
         if (selectedBrush == 4){
           painting.fill(selectedColor)
-          painting.stroke(0)
+          painting.stroke(0)//black
           painting.strokeWeight(8)
           painting.square(x, y, 50)
         }
+        //^^^square brush^^^
       }
       px = x;
       py = y;
