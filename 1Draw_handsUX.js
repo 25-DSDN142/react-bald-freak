@@ -14,7 +14,7 @@ function prepareInteraction() {
   borderImage = loadImage('/images/border.PNG')
 }
 
-/////////////////NOTE: TO SWITCH BETWEEN BRUSHES, OPEN PALM FOR BASIC BRUSH, PEACE FOR CIRCLE BRUSH, THUMBS UP FOR TRICOLOR BRUSH, FIST FOR SQUARE BRUSH/////////////
+//////////////////NOTE: TO SWITCH BETWEEN BRUSHES, OPEN PALM FOR BASIC BRUSH, PEACE FOR CIRCLE BRUSH, THUMBS UP FOR TRICOLOR BRUSH, FIST FOR SQUARE BRUSH/////////////
 
 let px = 0;
 let py = 0;
