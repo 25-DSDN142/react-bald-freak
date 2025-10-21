@@ -4,12 +4,14 @@
 let brushCursorImage;
 let brushImage;
 let colourImage;
+let borderImage;
 /* load images here */
 function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
   brushCursorImage = loadImage('/images/Brush_Cursor.PNG')
   brushImage = loadImage('/images/Brush.PNG')
   colourImage = loadImage('/images/Colour (1).PNG')
+  borderImage = loadImage('/images/border.PNG')
 }
 
 let px = 0;
@@ -30,6 +32,7 @@ function drawInteraction(faces, hands) {
 /////
   selectedColor = colors[int(map(Yvalue, 0, height, 0, colors.length))]
 
+  image(borderImage, 0, 0,)
   image(brushImage, 100, 100, 200, 200)
   image(colourImage, 100, 220, 200, 200)
   fill(selectedColor)
